@@ -1,0 +1,15 @@
+{% extends "encyclopedia/layout.html"%}
+
+{%block title%}
+{{bartitle}}
+{%endblock%}
+
+
+{%block body%}
+{{title|safe}}
+<form action="{%url 'editpage' bartitle %}" method="GET">
+    {%csrf_token%}
+    <input type="hidden" value="{{bartitle}}" name = "Information">
+    <input class="float-right mr-5 mt-5 btn btn-info" type="submit" value="Edit Entry">
+</form>
+{% endblock %}

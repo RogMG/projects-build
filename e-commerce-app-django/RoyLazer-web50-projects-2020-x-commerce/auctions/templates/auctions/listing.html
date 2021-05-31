@@ -1,0 +1,85 @@
+{%extends 'auctions/layout.html' %}
+
+{%block title%}
+{%for element in elements%}
+Auctions/{{element.name_product}}
+{%endfor%}
+{%endblock%}
+
+
+{%block body%}
+    {%for element in elements%}
+    <div class="container">
+        {%if status%}
+        {%if element.active == False%}
+        <div class="p-3 mb-2 bg-success text-white">Congratulations you're the winner of this listing </div>
+        {%endif%}
+        {%endif%}
+         {%if isOwner%}
+         <form class ="group-form" action="{%url 'active' element.id%}" method="POST" >
+         {%csrf_token%}
+         <div class = "text-center">
+            {%if element.active%}
+            <input type="submit" class="btn btn-danger" name="deactivebut" value="Deactive">       
+             {%else%}
+             <input type="submit" class="btn btn-success" name="activebut" value="Active">
+            {%endif%}
+        </div>
+        
+        </form>   
+        {%endif%}
+        <div class = "py-5">  
+            <div class="text-center" > <h3>{{element.name_product}}</h3></div> 
+            <div class="text-center"> 
+                <img src="{{element.image}}" width = "50%" alt="">                
+            </div>            
+            <div class="flex-column ">  
+                <div class="text-center"><h4>Category: {{element.category.category_name}}</h4></div>
+                <!--<div class = "ml-3"><label><h5>Description:</h5></label></div> -->
+                <div class = "my-3 mx-3 text-center"> <p><h4>Description: </h4>{{element.description}}</p></div>
+                <div class="text-center my-2"><h4>Bid: {{element.bid}}$ </h4></div>
+                 <form class ="group-form" action="{%url 'newBid' element.id%}" method="POST" >
+                 {%csrf_token%}
+                 <div class=" mx-auto w-50"> 
+                    {%if element.active%}
+                    {{bidForm}}
+                    <div class="mx-auto  w-75">
+                        <input class="btn btn-primary btn-sm btn- btn-block mr-2" type="submit" name="placeBid" value="Place Bid">
+                    </div>
+                    {%else%}
+                   
+                    {%endif%}
+                </div>
+                </form>
+              
+            </div>
+        </div>
+    </div>
+
+    <div class="container, mt-5">
+        <div class="container ">
+            <div class="row">
+                {%for comment in comments%}
+                <div class="col-2 my-4">
+                    {{comment.user_id.username}}
+                </div>
+                <div class="col-10 my-4">
+                {{comment.comment}}
+                </div>
+                {%endfor%}
+            </div>
+            {% if user.is_authenticated %}
+          <form action="{%url 'newComment' element.id%}" method="POST">
+              {%csrf_token%}
+              {{commentForm}}
+              <input class="btn btn-primary btn-sm btn- btn-block mr-2 mb-5" type="submit" name="Comment" value="Add new Comment">
+          </form>  
+          {%else%}
+          <div class="mt-5"><h2 class="text-center">You must be logged to add a Comment</h2></div>
+          <div class="mb-5"> <h2 class="text-center"><a href="{% url 'login' %}">Log In here.</a></h2></div>
+          {%endif%}
+        </div>
+        </div>
+        {%endfor%}
+    
+{%endblock%}

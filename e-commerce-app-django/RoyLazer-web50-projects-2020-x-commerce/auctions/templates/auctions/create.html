@@ -1,0 +1,15 @@
+{%extends "auctions/layout.html" %}
+
+{%block body%}
+<h2 = class="ml-5 my-3">Create a new Listing</h2>
+<form class="form control" method="POST">
+    {%csrf_token%}
+    <div class="container">
+        <div class="form-group flex-column mx-auto shadow-sm p-3 mb-5 bg-white rounded w-50">
+            {{form}}
+            <input class="btn btn-primary btn-sm flex-fill form-control" type="submit" value="Create New Listing!">
+        </div>
+    </div>
+</form>
+
+{%endblock%}

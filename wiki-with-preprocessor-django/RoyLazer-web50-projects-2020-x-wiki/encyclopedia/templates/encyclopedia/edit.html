@@ -1,0 +1,15 @@
+{%extends "encyclopedia/layout.html"%}
+
+{%block title%} {{title}}  {%endblock%}
+
+{%block body%}
+<h1>Edit "{{title}}"  entry</h1>
+<form action="" method="POST">
+    {%csrf_token%}
+    <div class=" mt-5 mr-5">
+    <textarea class="form-control mr-5"  name="Information" cols="20" rows="10">{{information}}</textarea>
+    <input  class="float-right mr-5 mt-5 btn btn-info" type="submit">
+    </div>
+</form>
+
+{%endblock%}

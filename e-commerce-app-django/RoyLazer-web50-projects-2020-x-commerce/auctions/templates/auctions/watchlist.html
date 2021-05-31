@@ -1,0 +1,32 @@
+{%extends "auctions/layout.html" %}
+
+{%block title%}
+Auctions/WatchList
+{%endblock%}
+
+
+{%block body%}
+<h2 = class="ml-5 my-3">Your WatchList</h2>
+   
+<div class="d-flex flex-wrap">
+    {%for element in elements%}
+    <div class="p-2 flex-column mx-auto shadow-sm p-3 mb-5 bg-white rounded">
+        <div class="container">
+            <div class="text-center" > <img src= "{{element.product_id.image}}" width="300"  alt="Listing Image"> </div>
+            <div class="text-center" > <b>{{element.product_id.name_product}}</b></div>
+            <div class="flex-column ">
+                <form action="{%url 'listing' element.product_id.id%}" method="POST" >
+                {%csrf_token%}
+                <div>Category: {{element.product_id.category.category_name}}</div>
+                <div class="text-center my-2"><b>Bid: {{element.product_id.bid}}$ </b></div>
+                <div class="d-flex ">
+                 <input class="btn btn-primary btn-sm flex-fill mr-2" type="submit" name="" value="Place Bid">
+                 <input class="btn btn-danger btn-sm mr-2" type="submit" name="" value="Delete">                 
+                </div>
+                </form>
+            </div>
+        </div>     
+    </div>    
+    {%endfor%}
+</div>
+{%endblock%}
